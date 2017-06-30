@@ -23,7 +23,7 @@ public class SnakeGame extends JPanel implements KeyListener
 	public final int max = 100;
 	public int[] snakePieces = new int[max];//
 
-	private int totalRounds = -2;// total turns, everytime a circle gets colored
+	private int totalRounds = -2;// total turns, every time a circle gets colored
 	private int score = 0;
 	boolean square1 = false;
 	boolean square2 = false;
