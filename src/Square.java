@@ -16,6 +16,26 @@ public class Square
 		c = col;
 	}
 
+	
+	public int getX()
+	{
+		return x;
+	}
+	
+	public int getY()
+	{
+		return y;
+	}
+	
+	public void setX(int newX)
+	{
+		x = newX;
+	}
+	
+	public void setY(int newY)
+	{
+		y = newY;
+	}
 
 	public void draw(Graphics page)
 	{
@@ -27,5 +47,11 @@ public class Square
 	public boolean collide(Square otherSq)
 	{
 		return true;
+	}
+	
+	public void moveTo(Square otherSq)
+	{
+		this.setX(otherSq.getX());
+		this.setY(otherSq.getX());
 	}
 }
