@@ -224,7 +224,7 @@ public class SnakeGame extends JPanel implements KeyListener
 	{
 		apple.draw(page);
 
-		for (int i = 0; i<snakePieces.length; i++)
+		for (int i = 0; i<1; i++)
 		{
 			snakePieces[i].draw(page);
 		}
