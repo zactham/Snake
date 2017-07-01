@@ -209,6 +209,17 @@ public class SnakeGame extends JPanel implements KeyListener
 		randomY = (int) (Math.random() * 399 + 1);
 	}
 
+	
+	public void drawGame(Graphics page)
+	{
+		apple.draw(page);
+		
+		for (int i = 0; i<snakePieces.length; i++)
+		{
+			snakePieces[i].draw(page);
+		}
+		
+	}
 
 	// Centers the window
 	public void centerWindow()
@@ -268,71 +279,8 @@ public class SnakeGame extends JPanel implements KeyListener
 	@Override
 	protected void paintComponent(Graphics page)
 	{
-		//		System.out.println("paint");
 		displayScore(page);
-
-		int length = 20;
-		int width = 20;
-
-		//paints in the apple if there isn't an apple already on the board
-		if (counterArrowPressed > 0)
-		{
-
-			if ((snakeX >= randomX && snakeX <= randomX) && (snakeY >= randomY && snakeY <= randomY))
-			{
-				appleinBoard = true;//apple is gone
-				page.clearRect(randomX, randomY, length, width);//deletes apple
-				System.out.println("snake longer");
-				//adds square to the snake
-				page.setColor(Color.green);
-				page.fillRect(snakeX, snakeY, length+20, width+20);
-			}
-
-			if (appleinBoard)
-			{
-				System.out.println("zebra");
-				setAppleLocation();//sets the apples location
-				page.setColor(Color.red);
-				System.out.println(randomX);
-				System.out.println(randomY);
-				page.fillRect(randomX, randomY, length, width);
-				appleinBoard = false;
-			}
-
-
-			page.clearRect(snakeXOld, snakeYOld, length, width);
-
-
-			page.setColor(Color.green);
-			page.fillRect(snakeX, snakeY, length, width);
-
-
-			snakeXOld = snakeX;
-			snakeYOld = snakeY;
-
-
-
-
-		}
-		//intial set up of the snake and apple
-		else
-		{
-			setAppleLocation();//sets the apples location
-			page.setColor(Color.red);
-			System.out.println(randomX);
-			System.out.println(randomY);
-			page.fillRect(randomX, randomY, length, width);
-
-
-			page.setColor(Color.green);
-			page.fillRect(snakeX, snakeY, length, width);
-
-
-			snakeXOld = snakeX;
-			snakeYOld = snakeY;
-
-			appleinBoard = false;//apple is still on the screen
-		}
+		drawGame(page);
 	}
 
 	public int getScore()
