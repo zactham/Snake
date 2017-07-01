@@ -12,17 +12,20 @@ import javax.swing.*;
 public class SnakeGame extends JPanel implements KeyListener
 {
 	boolean appleinBoard = true; 
-	public int randomX = 0;
-	public int randomY = 0;
+
 	public int counterArrowPressed = 0;
 	public int snakeX = 200;
 	public int snakeY = 200;
 	public int snakeXOld = 200;
 	public int snakeYOld = 200;
 
+
+	public int gameboardSize = 400;
+	public int squareSize = 20;
+
 	public final int max = 100;
 
-	Square apple = new Square(randomX, randomY, 20, Color.red);
+	Square apple = new Square(0, 0, squareSize, Color.red);
 	Square[] snakePieces = new Square [max];
 
 
@@ -95,7 +98,7 @@ public class SnakeGame extends JPanel implements KeyListener
 		//	setAppleLocation();
 
 
-		Square number1 = new Square(snakeX, snakeY, 20, Color.GREEN );
+		Square number1 = new Square(snakeX, snakeY, squareSize, Color.GREEN );
 		snakePieces[0] = number1;
 
 
@@ -135,9 +138,9 @@ public class SnakeGame extends JPanel implements KeyListener
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		round = 0;
 		centerWindow();
-		frame.setSize(400, 400);
+		frame.setSize(gameboardSize, gameboardSize);
 
-		
+
 		// runs the mainLoop
 		ActionListener timerAction = new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
@@ -153,17 +156,17 @@ public class SnakeGame extends JPanel implements KeyListener
 		Timer timer = new Timer(15, timerAction);
 		timer.setRepeats(true);
 		timer.start();
-		 
+
 
 	}
 
-	
+
 	public void MainLoop() // throws InterruptedException
 	{
 
-			repaint();
+		repaint();
 	}
-	 
+
 
 	public class AL implements ActionListener
 	{
@@ -205,20 +208,27 @@ public class SnakeGame extends JPanel implements KeyListener
 
 	public void setAppleLocation()
 	{
-		randomX = (int) (Math.random() * 399 + 1);
-		randomY = (int) (Math.random() * 399 + 1);
+
+		int randomX = (int) (Math.random() * (gameboardSize-squareSize-squareSize));
+		randomX += squareSize;
+
+		int randomY = (int) (Math.random() * (gameboardSize-squareSize-squareSize));
+		randomY += squareSize;
+
+		apple.setX(randomX);
+		apple.setY(randomY);
 	}
 
-	
+
 	public void drawGame(Graphics page)
 	{
 		apple.draw(page);
-		
+
 		for (int i = 0; i<snakePieces.length; i++)
 		{
 			snakePieces[i].draw(page);
 		}
-		
+
 	}
 
 	// Centers the window
