@@ -19,11 +19,11 @@ public class SnakeGame extends JPanel implements KeyListener
 	public int snakeY = 200;
 	public int snakeXOld = 200;
 	public int snakeYOld = 200;
-	private boolean runAgain = true;
+	
 	public final int max = 100;
-	public int[] snakePieces = new int[max];//
+	public SnakePiece[] snakePieces = new SnakePiece[max];//
 
-	private int totalRounds = -2;// total turns, every time a circle gets colored
+	
 	private int score = 0;
 	boolean square1 = false;
 	boolean square2 = false;
@@ -65,9 +65,7 @@ public class SnakeGame extends JPanel implements KeyListener
 		addKeyListener(this);
 
 
-		runAgain = true;
-
-		totalRounds = -2;// total turns, everytime a circle gets colored
+		
 		score = 0;
 		square1 = false;
 		square2 = false;
@@ -148,7 +146,7 @@ public class SnakeGame extends JPanel implements KeyListener
 		round = 0;
 		centerWindow();
 		frame.setSize(400, 400);
-		setColors();
+		
 		/*
 		// runs the mainLoop
 		ActionListener timerAction = new ActionListener() {
@@ -252,16 +250,7 @@ public class SnakeGame extends JPanel implements KeyListener
 		}
 	}
 
-	public void setColors()
-	{
-		totalRounds++;
-	}
-
-	public void rounds()
-	{
-		runAgain = true;
-	}
-
+	
 
 	// returns true if next turn
 	public void boardTurn(int round)
@@ -306,6 +295,7 @@ public class SnakeGame extends JPanel implements KeyListener
 	@Override
 	protected void paintComponent(Graphics page)
 	{
+//		System.out.println("paint");
 		displayScore(page);
 
 		int length = 20;
