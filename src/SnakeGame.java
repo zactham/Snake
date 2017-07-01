@@ -11,7 +11,7 @@ import javax.swing.*;
 
 public class SnakeGame extends JPanel implements KeyListener
 {
-	boolean apple = true; 
+	boolean appleinBoard = true; 
 	public int randomX = 0;
 	public int randomY = 0;
 	public int counterArrowPressed = 0;
@@ -19,28 +19,23 @@ public class SnakeGame extends JPanel implements KeyListener
 	public int snakeY = 200;
 	public int snakeXOld = 200;
 	public int snakeYOld = 200;
-	
-	public final int max = 100;
-	public SnakePiece[] snakePieces = new SnakePiece[max];//
 
-	
+	public final int max = 100;
+
+	Square apple = new Square(randomX, randomY, 20, Color.red);
+	Square[] snakePieces = new Square [max];
+
+
+
 	private int score = 0;
-	boolean square1 = false;
-	boolean square2 = false;
-	boolean square3 = false;
-	boolean square4 = false;
-	boolean square5 = false;
-	boolean square6 = false;
-	boolean square7 = false;
-	boolean square8 = false;
-	boolean square9 = false;
+
 
 	int counter = 1;
 	boolean scored = false;
 
 	int round = 0;
 
-	int highlightedCircle = -1;
+
 
 
 	private boolean soundPlaying = true;
@@ -64,34 +59,18 @@ public class SnakeGame extends JPanel implements KeyListener
 		// Register for mouse events on the panel
 		addKeyListener(this);
 
-
-		
 		score = 0;
-		square1 = false;
-		square2 = false;
-		square3 = false;
-		square4 = false;
-		square5 = false;
-		square6 = false;
-		square7 = false;
-		square8 = false;
-		square9 = false;
 
 		counter = 1;
 		scored = false;
 
 		round = 0;
 
-		highlightedCircle = -1;
-
-
 		soundPlaying = true;
 
 		correct = false;
 
 		turnTime = 2500;
-
-
 	}
 
 
@@ -101,7 +80,6 @@ public class SnakeGame extends JPanel implements KeyListener
 	{
 
 		// launch game
-
 		JFrame frame = new JFrame("Sample Frame");
 
 		frame.add(this);
@@ -111,6 +89,18 @@ public class SnakeGame extends JPanel implements KeyListener
 		frame.setBackground(Color.WHITE);
 
 		JOptionPane.showMessageDialog(start, "Use the arrow keys to move the snake around and eat apples");
+
+
+
+		//	setAppleLocation();
+
+
+		Square number1 = new Square(snakeX, snakeY, 20, Color.GREEN );
+		snakePieces[0] = number1;
+
+
+
+
 
 
 		//Sets the speed of the game for each mode
@@ -146,8 +136,8 @@ public class SnakeGame extends JPanel implements KeyListener
 		round = 0;
 		centerWindow();
 		frame.setSize(400, 400);
+
 		
-		/*
 		// runs the mainLoop
 		ActionListener timerAction = new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
@@ -163,28 +153,17 @@ public class SnakeGame extends JPanel implements KeyListener
 		Timer timer = new Timer(15, timerAction);
 		timer.setRepeats(true);
 		timer.start();
-		 */
+		 
 
 	}
 
-	/*
+	
 	public void MainLoop() // throws InterruptedException
 	{
 
-		if (round < max && runAgain)
-		{
-			if (timer.isExpired())
-			{
-				timer.start();
-				setColors();
-				boardTurn(round);
-				round++;
-			}
 			repaint();
-		}
-
 	}
-	 */
+	 
 
 	public class AL implements ActionListener
 	{
@@ -250,15 +229,9 @@ public class SnakeGame extends JPanel implements KeyListener
 		}
 	}
 
-	
 
-	// returns true if next turn
-	public void boardTurn(int round)
-	{
-		scored = false;
 
-		gameEnding();
-	}
+
 
 	public void gameEnding()
 	{
@@ -295,7 +268,7 @@ public class SnakeGame extends JPanel implements KeyListener
 	@Override
 	protected void paintComponent(Graphics page)
 	{
-//		System.out.println("paint");
+		//		System.out.println("paint");
 		displayScore(page);
 
 		int length = 20;
@@ -307,7 +280,7 @@ public class SnakeGame extends JPanel implements KeyListener
 
 			if ((snakeX >= randomX && snakeX <= randomX) && (snakeY >= randomY && snakeY <= randomY))
 			{
-				apple = true;//apple is gone
+				appleinBoard = true;//apple is gone
 				page.clearRect(randomX, randomY, length, width);//deletes apple
 				System.out.println("snake longer");
 				//adds square to the snake
@@ -315,7 +288,7 @@ public class SnakeGame extends JPanel implements KeyListener
 				page.fillRect(snakeX, snakeY, length+20, width+20);
 			}
 
-			if (apple)
+			if (appleinBoard)
 			{
 				System.out.println("zebra");
 				setAppleLocation();//sets the apples location
@@ -323,10 +296,10 @@ public class SnakeGame extends JPanel implements KeyListener
 				System.out.println(randomX);
 				System.out.println(randomY);
 				page.fillRect(randomX, randomY, length, width);
-				apple = false;
+				appleinBoard = false;
 			}
-			
-			
+
+
 			page.clearRect(snakeXOld, snakeYOld, length, width);
 
 
@@ -358,7 +331,7 @@ public class SnakeGame extends JPanel implements KeyListener
 			snakeXOld = snakeX;
 			snakeYOld = snakeY;
 
-			apple = false;//apple is still on the screen
+			appleinBoard = false;//apple is still on the screen
 		}
 	}
 
