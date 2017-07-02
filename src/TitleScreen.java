@@ -19,7 +19,8 @@ public class TitleScreen extends JApplet implements KeyListener
 	public static boolean easy = false;
 	public static boolean med = false;
 	public static boolean hard = false;
-
+	public static TitleScreen theApp;
+	
 	private SnakeGame board;
 
 	private ImageIcon titleScreenImage;//image
@@ -38,7 +39,8 @@ public class TitleScreen extends JApplet implements KeyListener
 
 	public void init () 
 	{		
-
+		theApp = this;
+		
 		try
 		{
 			playMusicMain();
@@ -67,24 +69,13 @@ public class TitleScreen extends JApplet implements KeyListener
 				if (c == KeyEvent.VK_ENTER)
 				{
 					
-
 					easy = true;
 					Sound.audioClip.stop();
 					soundPlaying = false;
 
-
-					board = new SnakeGame();
-					try
-					{
-						board.init();
-					} catch (InterruptedException e1) 
-					{
-						//	System.out.println(e1);
-					}
-
+					TitleScreen.theApp.launchSnakeGame();
 				}
-			
-				
+							
 				if (c == KeyEvent.VK_E)
 				{
 					//System.out.println("Easy");
@@ -93,17 +84,9 @@ public class TitleScreen extends JApplet implements KeyListener
 					Sound.audioClip.stop();
 					soundPlaying = false;
 
-
-					board = new SnakeGame();
-					try
-					{
-						board.init();
-					} catch (InterruptedException e1) 
-					{
-						//	System.out.println(e1);
-					}
-
+					TitleScreen.theApp.launchSnakeGame();
 				}
+				
 				if (c == KeyEvent.VK_M)
 				{
 					//System.out.println("Medium");
@@ -113,16 +96,9 @@ public class TitleScreen extends JApplet implements KeyListener
 					Sound.audioClip.stop();
 					soundPlaying = false;
 
-
-					board = new SnakeGame();
-					try
-					{
-						board.init();
-					} catch (InterruptedException e1) 
-					{
-						System.out.println(e1);
-					}
+					TitleScreen.theApp.launchSnakeGame();
 				}
+				
 				if (c == KeyEvent.VK_H)
 				{
 					//System.out.println("Hard");
@@ -132,15 +108,7 @@ public class TitleScreen extends JApplet implements KeyListener
 					Sound.audioClip.stop();
 					soundPlaying = false;
 
-
-					board = new SnakeGame();
-					try
-					{
-						board.init();
-					} catch (InterruptedException e1) 
-					{
-						//System.out.println(e1);
-					}
+					theApp.launchSnakeGame();
 				}
 			}
 		});
@@ -211,7 +179,18 @@ public class TitleScreen extends JApplet implements KeyListener
 	}
 
 
-
+	public void launchSnakeGame()
+	{
+		hideWindow();
+		board = new SnakeGame();
+		try
+		{
+			board.init();
+		} catch (InterruptedException e1) 
+		{
+			//System.out.println(e1);
+		}
+	}
 
 	public class CloseListener implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
@@ -230,6 +209,14 @@ public class TitleScreen extends JApplet implements KeyListener
 
 	}
 
+	public void hideWindow()
+	{
+		Container c = getParent();
+		while (c.getParent()!=null) 
+			c = c.getParent();
+		c.setVisible(false);		
+	}
+	
 	//Centers the window
 	public void centerWindow()
 	{

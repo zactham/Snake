@@ -94,8 +94,7 @@ public class SnakeGame extends JPanel implements KeyListener
 		JOptionPane.showMessageDialog(start, "Use the arrow keys to move the snake around and eat apples");
 
 
-
-		//	setAppleLocation();
+		setAppleLocation();
 
 
 		Square number1 = new Square(snakeX, snakeY, squareSize, Color.GREEN );
@@ -137,9 +136,12 @@ public class SnakeGame extends JPanel implements KeyListener
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		round = 0;
+
 		centerWindow();
 		frame.setSize(gameboardSize, gameboardSize);
+		frame.setLocationRelativeTo(TitleScreen.theApp);
 
+		
 
 		// runs the mainLoop
 		ActionListener timerAction = new ActionListener() {
@@ -151,12 +153,10 @@ public class SnakeGame extends JPanel implements KeyListener
 		};
 
 
-
 		// Frame rate, updates the frame every 15ms --- 60fps
 		Timer timer = new Timer(15, timerAction);
 		timer.setRepeats(true);
 		timer.start();
-
 
 	}
 
@@ -289,6 +289,8 @@ public class SnakeGame extends JPanel implements KeyListener
 	@Override
 	protected void paintComponent(Graphics page)
 	{
+		super.paintComponent(page);		// paint baseclass members too
+		
 		displayScore(page);
 		drawGame(page);
 	}
@@ -361,11 +363,6 @@ public class SnakeGame extends JPanel implements KeyListener
 		// TODO Auto-generated method stub
 
 	}
-	/*
-	public void update(Graphics g) 
-	{
-		paint(g);
-	}
-	 */
+
 }
 
