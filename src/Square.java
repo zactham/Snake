@@ -41,6 +41,7 @@ public class Square
 	{
 		page.setColor(c);
 		page.fillRect(x, y, size, size);
+		SnakeGame.snakeLengthCounter+=1;
 	}
 
 	//returns true if the square collides (intersects) with another Square object that is passed in

@@ -13,7 +13,11 @@ public class SnakeGame extends JPanel implements KeyListener
 {
 	boolean appleinBoard = true; 
 
-	public int counterArrowPressed = 0;
+	public int direction = 0;
+	public boolean arrowKeyPressed = false;
+
+	public static int snakeLengthCounter = 0;
+
 	public int snakeX = 200;
 	public int snakeY = 200;
 	public int snakeXOld = 200;
@@ -141,7 +145,7 @@ public class SnakeGame extends JPanel implements KeyListener
 		frame.setSize(gameboardSize, gameboardSize);
 		frame.setLocationRelativeTo(TitleScreen.theApp);
 
-		
+
 
 		// runs the mainLoop
 		ActionListener timerAction = new ActionListener() {
@@ -163,10 +167,26 @@ public class SnakeGame extends JPanel implements KeyListener
 
 	public void MainLoop() // throws InterruptedException
 	{
-
+		updateGame();
 		repaint();
 	}
 
+
+	public void updateGame()
+	{
+		if (arrowKeyPressed)
+		{
+			if(direction == 1)
+				snakePieces[0].setY(snakePieces[0].getY()+1);
+			if(direction == 2)
+				snakePieces[0].setY(snakePieces[0].getY()-1);
+			if(direction == 3)
+				snakePieces[0].setX(snakePieces[0].getX()-11);
+			if(direction == 4)
+				snakePieces[0].setX(snakePieces[0].getX()+1);
+
+		}
+	}
 
 	public class AL implements ActionListener
 	{
@@ -224,7 +244,7 @@ public class SnakeGame extends JPanel implements KeyListener
 	{
 		apple.draw(page);
 
-		for (int i = 0; i<1; i++)
+		for (int i = 0; i<snakeLengthCounter; i++)
 		{
 			snakePieces[i].draw(page);
 		}
@@ -290,7 +310,7 @@ public class SnakeGame extends JPanel implements KeyListener
 	protected void paintComponent(Graphics page)
 	{
 		super.paintComponent(page);		// paint baseclass members too
-		
+
 		displayScore(page);
 		drawGame(page);
 	}
@@ -308,34 +328,33 @@ public class SnakeGame extends JPanel implements KeyListener
 		// TODO Auto-generated method stub
 		int c = arg0.getKeyCode();
 
+
+
 		//Pressing the keys 1 2 3 on the num pad on the right side of the keyboard
-		if (c == KeyEvent.VK_UP)
+		if (c == KeyEvent.VK_UP)//-2
 		{
-			counterArrowPressed = 1;
-			snakeY-=2;
-			repaint();
+			arrowKeyPressed = true;
+			direction = 1;
 		}
 
-		if (c == KeyEvent.VK_DOWN) 
+		if (c == KeyEvent.VK_DOWN) //+2
 		{
-			counterArrowPressed = 1;
-			snakeY+=2;
-			repaint();
+			arrowKeyPressed = true;
+			direction = 2;
 		}
 
-		if (c == KeyEvent.VK_RIGHT)
+		if (c == KeyEvent.VK_LEFT)//-2
 		{
-			counterArrowPressed = 1;
-			snakeX+=2;
-			repaint();
+			arrowKeyPressed = true;
+			direction = 3;
+		}
+		if (c == KeyEvent.VK_RIGHT)//+2
+		{
+			arrowKeyPressed = true;
+			direction = 4;
 		}
 
-		if (c == KeyEvent.VK_LEFT)
-		{
-			counterArrowPressed = 1;
-			snakeX-=2;
-			repaint();
-		}
+
 
 		//When S is pressed the music stops
 		if (c == KeyEvent.VK_S) {
