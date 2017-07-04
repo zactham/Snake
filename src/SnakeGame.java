@@ -14,14 +14,13 @@ public class SnakeGame extends JPanel implements KeyListener
 	boolean appleinBoard = true; 
 
 	public int direction = 0;
-	
 
-	public static int snakeLengthCounter = 1;
+
+	public int snakeLengthCounter = 1;
 
 	public int snakeX = 200;
 	public int snakeY = 200;
-	public int snakeXOld = 200;
-	public int snakeYOld = 200;
+
 
 
 	public int gameboardSize = 400;
@@ -174,14 +173,14 @@ public class SnakeGame extends JPanel implements KeyListener
 
 	public void updateGame()
 	{
-			if(direction == 1)
-				snakePieces[0].setY(snakePieces[0].getY()-1);
-			if(direction == 2)
-				snakePieces[0].setY(snakePieces[0].getY()+1);
-			if(direction == 3)
-				snakePieces[0].setX(snakePieces[0].getX()-1);
-			if(direction == 4)
-				snakePieces[0].setX(snakePieces[0].getX()+1);
+		if(direction == 1)
+			snakePieces[0].setY(snakePieces[0].getY()-1);
+		if(direction == 2)
+			snakePieces[0].setY(snakePieces[0].getY()+1);
+		if(direction == 3)
+			snakePieces[0].setX(snakePieces[0].getX()-1);
+		if(direction == 4)
+			snakePieces[0].setX(snakePieces[0].getX()+1);
 	}
 
 	public class AL implements ActionListener
