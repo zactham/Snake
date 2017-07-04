@@ -14,9 +14,9 @@ public class SnakeGame extends JPanel implements KeyListener
 	boolean appleinBoard = true; 
 
 	public int direction = 0;
-	public boolean arrowKeyPressed = false;
+	
 
-	public static int snakeLengthCounter = 0;
+	public static int snakeLengthCounter = 1;
 
 	public int snakeX = 200;
 	public int snakeY = 200;
@@ -147,7 +147,7 @@ public class SnakeGame extends JPanel implements KeyListener
 
 
 
-		// runs the mainLoop
+		// runs the mainLoop every 15 milliseconds or 60 frames per seconds 
 		ActionListener timerAction = new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				MainLoop();
@@ -174,18 +174,14 @@ public class SnakeGame extends JPanel implements KeyListener
 
 	public void updateGame()
 	{
-		if (arrowKeyPressed)
-		{
 			if(direction == 1)
-				snakePieces[0].setY(snakePieces[0].getY()+1);
-			if(direction == 2)
 				snakePieces[0].setY(snakePieces[0].getY()-1);
+			if(direction == 2)
+				snakePieces[0].setY(snakePieces[0].getY()+1);
 			if(direction == 3)
-				snakePieces[0].setX(snakePieces[0].getX()-11);
+				snakePieces[0].setX(snakePieces[0].getX()-1);
 			if(direction == 4)
 				snakePieces[0].setX(snakePieces[0].getX()+1);
-
-		}
 	}
 
 	public class AL implements ActionListener
@@ -333,24 +329,20 @@ public class SnakeGame extends JPanel implements KeyListener
 		//Pressing the keys 1 2 3 on the num pad on the right side of the keyboard
 		if (c == KeyEvent.VK_UP)//-2
 		{
-			arrowKeyPressed = true;
 			direction = 1;
 		}
 
 		if (c == KeyEvent.VK_DOWN) //+2
-		{
-			arrowKeyPressed = true;
+		{	
 			direction = 2;
 		}
 
 		if (c == KeyEvent.VK_LEFT)//-2
-		{
-			arrowKeyPressed = true;
+		{	
 			direction = 3;
 		}
 		if (c == KeyEvent.VK_RIGHT)//+2
 		{
-			arrowKeyPressed = true;
 			direction = 4;
 		}
 
