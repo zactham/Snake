@@ -11,18 +11,14 @@ import javax.swing.*;
 
 public class SnakeGame extends JPanel implements KeyListener
 {
-	boolean appleinBoard = true; 
 
 	public int direction = 0;
-	
 
-	public static int snakeLengthCounter = 1;
+	public boolean end = false;
+	public int snakeLengthCounter = 1;
 
 	public int snakeX = 200;
 	public int snakeY = 200;
-	public int snakeXOld = 200;
-	public int snakeYOld = 200;
-
 
 	public int gameboardSize = 400;
 	public int squareSize = 20;
@@ -36,18 +32,9 @@ public class SnakeGame extends JPanel implements KeyListener
 
 	private int score = 0;
 
-
-	int counter = 1;
-	boolean scored = false;
-
-	int round = 0;
-
-
-
-
 	private boolean soundPlaying = true;
 
-	public boolean correct = false;
+
 
 
 	public MyTimer timer;
@@ -68,14 +55,7 @@ public class SnakeGame extends JPanel implements KeyListener
 
 		score = 0;
 
-		counter = 1;
-		scored = false;
-
-		round = 0;
-
 		soundPlaying = true;
-
-		correct = false;
 
 		turnTime = 2500;
 	}
@@ -139,7 +119,6 @@ public class SnakeGame extends JPanel implements KeyListener
 
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		round = 0;
 
 		centerWindow();
 		frame.setSize(gameboardSize, gameboardSize);
@@ -174,14 +153,14 @@ public class SnakeGame extends JPanel implements KeyListener
 
 	public void updateGame()
 	{
-			if(direction == 1)
-				snakePieces[0].setY(snakePieces[0].getY()-1);
-			if(direction == 2)
-				snakePieces[0].setY(snakePieces[0].getY()+1);
-			if(direction == 3)
-				snakePieces[0].setX(snakePieces[0].getX()-1);
-			if(direction == 4)
-				snakePieces[0].setX(snakePieces[0].getX()+1);
+		if(direction == 1)
+			snakePieces[0].setY(snakePieces[0].getY()-1);
+		if(direction == 2)
+			snakePieces[0].setY(snakePieces[0].getY()+1);
+		if(direction == 3)
+			snakePieces[0].setX(snakePieces[0].getX()-1);
+		if(direction == 4)
+			snakePieces[0].setX(snakePieces[0].getX()+1);
 	}
 
 	public class AL implements ActionListener
@@ -273,7 +252,7 @@ public class SnakeGame extends JPanel implements KeyListener
 	public void gameEnding()
 	{
 		//When the game ends
-		if (round==max-1)
+		if (end)
 		{
 			if (soundPlaying)
 			{
