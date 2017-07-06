@@ -12,6 +12,8 @@ import javax.swing.*;
 public class SnakeGame extends JPanel implements KeyListener
 {
 
+	public int snakeSpeed = 3;
+	
 	public int direction = 0;
 
 	public boolean end = false;
@@ -84,7 +86,7 @@ public class SnakeGame extends JPanel implements KeyListener
 		Square number1 = new Square(snakeX, snakeY, squareSize, Color.GREEN );
 		snakePieces[0] = number1;
 
-
+		
 
 
 
@@ -147,6 +149,7 @@ public class SnakeGame extends JPanel implements KeyListener
 	public void MainLoop() // throws InterruptedException
 	{
 		updateGame();
+		collide();
 		repaint();
 	}
 
@@ -154,13 +157,13 @@ public class SnakeGame extends JPanel implements KeyListener
 	public void updateGame()
 	{
 		if(direction == 1)
-			snakePieces[0].setY(snakePieces[0].getY()-1);
+			snakePieces[0].setY(snakePieces[0].getY()-snakeSpeed);
 		if(direction == 2)
-			snakePieces[0].setY(snakePieces[0].getY()+1);
+			snakePieces[0].setY(snakePieces[0].getY()+snakeSpeed);
 		if(direction == 3)
-			snakePieces[0].setX(snakePieces[0].getX()-1);
+			snakePieces[0].setX(snakePieces[0].getX()-snakeSpeed);
 		if(direction == 4)
-			snakePieces[0].setX(snakePieces[0].getX()+1);
+			snakePieces[0].setX(snakePieces[0].getX()+snakeSpeed);
 	}
 
 	public class AL implements ActionListener
@@ -198,6 +201,14 @@ public class SnakeGame extends JPanel implements KeyListener
 
 	{
 		Sound.play("SMACK Sound Effect.wav");
+	}
+	
+	public void collide()
+	{
+		if(apple.getX() == snakePieces[0].getX() && apple.getY() == snakePieces[0].getY())
+		{
+			System.out.println("Collide");
+		}
 	}
 
 
