@@ -12,22 +12,22 @@ import javax.swing.*;
 public class SnakeGame extends JPanel implements KeyListener
 {
 	
-	public int direction = 0, oldDirection;
+	private int direction = 0, oldDirection;
 
-	public boolean end = false;
-	public int snakeLengthCounter = 1;
+	private boolean end = false;
+	private int snakeLengthCounter = 1;
 
-	public int gameboardSize = 400;
-	public int squareSize = 20;
+	private int gameboardSize = 400;
+	private int squareSize = 20;
 
 	// make initial snakeX,snakeY a multiple of squareSize
-	public int snakeX = ((gameboardSize/squareSize)/2 - 1)*squareSize;
-	public int snakeY = snakeX;
+	private int snakeX = squareSize/2;
+	private int snakeY = snakeX;
 
 	// snake speed must be a even factor of squareSize
-	public int snakeSpeed = squareSize/10;
+	private int snakeSpeed = squareSize/10;
 
-	public final int max = 100;
+	private final int max = 100;
 
 	Square apple = new Square(0, 0, squareSize, Color.red);
 	Square[] snakePieces = new Square [max];
@@ -222,9 +222,22 @@ public class SnakeGame extends JPanel implements KeyListener
 
 		int randomX = (int) (Math.random() * (gameboardSize-squareSize-squareSize));
 		randomX += squareSize;
+		
+		while (randomX % squareSize != 0)
+		{
+			randomX = (int) (Math.random() * (gameboardSize-squareSize-squareSize));
+			randomX += squareSize;
+		}
 
 		int randomY = (int) (Math.random() * (gameboardSize-squareSize-squareSize));
 		randomY += squareSize;
+		
+		while (randomY % squareSize != 0)
+		{
+			randomY = (int) (Math.random() * (gameboardSize-squareSize-squareSize));
+			randomY += squareSize;
+		}
+
 
 		apple.setX(randomX);
 		apple.setY(randomY);
@@ -321,7 +334,7 @@ public class SnakeGame extends JPanel implements KeyListener
 
 
 
-		//Pressing the keys 1 2 3 on the num pad on the right side of the keyboard
+	
 		if (c == KeyEvent.VK_UP)//-2
 		{
 			direction = 1;
