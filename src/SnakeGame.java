@@ -11,7 +11,7 @@ import javax.swing.*;
 
 public class SnakeGame extends JPanel implements KeyListener
 {
-	
+
 	private int direction = 0, oldDirection;
 
 	private boolean end = false;
@@ -21,7 +21,7 @@ public class SnakeGame extends JPanel implements KeyListener
 	private int squareSize = 20;
 
 	// make initial snakeX,snakeY a multiple of squareSize
-	private int snakeX = squareSize/2;
+	private int snakeX = ((gameboardSize/squareSize)/2 - 1)*squareSize;
 	private int snakeY = snakeX;
 
 	// snake speed must be a even factor of squareSize
@@ -88,7 +88,7 @@ public class SnakeGame extends JPanel implements KeyListener
 		Square number1 = new Square(snakeX, snakeY, squareSize, Color.GREEN );
 		snakePieces[0] = number1;
 
-		
+
 
 
 
@@ -164,7 +164,7 @@ public class SnakeGame extends JPanel implements KeyListener
 		{
 			oldDirection = direction;			
 		}
-		
+
 		if(oldDirection == 1)
 			snakePieces[0].setY(snakePieces[0].getY()-snakeSpeed);
 		if(oldDirection == 2)
@@ -173,8 +173,8 @@ public class SnakeGame extends JPanel implements KeyListener
 			snakePieces[0].setX(snakePieces[0].getX()-snakeSpeed);
 		if(oldDirection == 4)
 			snakePieces[0].setX(snakePieces[0].getX()+snakeSpeed);
-		
-		
+
+
 	}
 
 	public class AL implements ActionListener
@@ -207,7 +207,7 @@ public class SnakeGame extends JPanel implements KeyListener
 	{
 		Sound.play("SMACK Sound Effect.wav");
 	}
-	
+
 	public void collide()
 	{
 		if(apple.getX() == snakePieces[0].getX() && apple.getY() == snakePieces[0].getY())
@@ -222,7 +222,7 @@ public class SnakeGame extends JPanel implements KeyListener
 
 		int randomX = (int) (Math.random() * (gameboardSize-squareSize-squareSize));
 		randomX += squareSize;
-		
+
 		while (randomX % squareSize != 0)
 		{
 			randomX = (int) (Math.random() * (gameboardSize-squareSize-squareSize));
@@ -231,7 +231,7 @@ public class SnakeGame extends JPanel implements KeyListener
 
 		int randomY = (int) (Math.random() * (gameboardSize-squareSize-squareSize));
 		randomY += squareSize;
-		
+
 		while (randomY % squareSize != 0)
 		{
 			randomY = (int) (Math.random() * (gameboardSize-squareSize-squareSize));
@@ -334,7 +334,7 @@ public class SnakeGame extends JPanel implements KeyListener
 
 
 
-	
+
 		if (c == KeyEvent.VK_UP)//-2
 		{
 			direction = 1;
