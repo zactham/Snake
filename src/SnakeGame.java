@@ -11,19 +11,21 @@ import javax.swing.*;
 
 public class SnakeGame extends JPanel implements KeyListener
 {
-
-	public int snakeSpeed = 3;
 	
-	public int direction = 0;
+	public int direction = 0, oldDirection;
 
 	public boolean end = false;
 	public int snakeLengthCounter = 1;
 
-	public int snakeX = 200;
-	public int snakeY = 200;
-
 	public int gameboardSize = 400;
 	public int squareSize = 20;
+
+	// make initial snakeX,snakeY a multiple of squareSize
+	public int snakeX = ((gameboardSize/squareSize)/2 - 1)*squareSize;
+	public int snakeY = snakeX;
+
+	// snake speed must be a even factor of squareSize
+	public int snakeSpeed = squareSize/10;
 
 	public final int max = 100;
 
@@ -111,7 +113,7 @@ public class SnakeGame extends JPanel implements KeyListener
 		try
 
 		{
-			playMusicMain();
+			playInGameMusic();
 		}
 
 		catch (Exception err)
@@ -156,14 +158,23 @@ public class SnakeGame extends JPanel implements KeyListener
 
 	public void updateGame()
 	{
-		if(direction == 1)
+		// only change direction when snakehead is on a multiple of squareSize
+		if (direction != oldDirection && snakePieces[0].getX() % squareSize == 0 &&
+				snakePieces[0].getY() % squareSize == 0)
+		{
+			oldDirection = direction;			
+		}
+		
+		if(oldDirection == 1)
 			snakePieces[0].setY(snakePieces[0].getY()-snakeSpeed);
-		if(direction == 2)
+		if(oldDirection == 2)
 			snakePieces[0].setY(snakePieces[0].getY()+snakeSpeed);
-		if(direction == 3)
+		if(oldDirection == 3)
 			snakePieces[0].setX(snakePieces[0].getX()-snakeSpeed);
-		if(direction == 4)
+		if(oldDirection == 4)
 			snakePieces[0].setX(snakePieces[0].getX()+snakeSpeed);
+		
+		
 	}
 
 	public class AL implements ActionListener
@@ -189,12 +200,6 @@ public class SnakeGame extends JPanel implements KeyListener
 	{
 		Sound.play("IngameMusic.wav");
 
-	}
-
-	public void playMusicMain() throws InterruptedException
-
-	{
-		playInGameMusic();
 	}
 
 	public void playSoundEffect() throws InterruptedException
