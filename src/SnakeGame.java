@@ -37,16 +37,10 @@ public class SnakeGame extends JPanel implements KeyListener
 	private int score = 0;
 
 	private boolean soundPlaying = true;
+	
 
-
-
-
-	public MyTimer timer;
-	public int turnTime = 2500;
-
-	public JFrame restart;
-	public JFrame gameOver;
-	public JFrame start;
+	private JFrame gameOver;
+	private JFrame start;
 
 
 
@@ -61,7 +55,7 @@ public class SnakeGame extends JPanel implements KeyListener
 
 		soundPlaying = true;
 
-		turnTime = 2500;
+		
 	}
 
 
@@ -95,20 +89,26 @@ public class SnakeGame extends JPanel implements KeyListener
 
 		//Sets the speed of the game for each mode
 		if (TitleScreen.easy == true)
+		{
+			
+		}
 
-			turnTime = 800;
+			
 
 		if (TitleScreen.med == true)
+		{
+			
+		}
 
-			turnTime = 500;
+			
 
 		if (TitleScreen.hard == true)
+		{
+			
+		}
 
-			turnTime = 400;
-
-		timer = new MyTimer(turnTime);
-
-		timer.start();
+	
+	
 
 		try
 
@@ -219,24 +219,20 @@ public class SnakeGame extends JPanel implements KeyListener
 
 	public void setAppleLocation()
 	{
+//400-20-20 = 360
+		int randomX = (int) (Math.random() *((gameboardSize-squareSize-squareSize)/squareSize));
+		randomX *= squareSize;
+		System.out.println(randomX);
+		
+		int randomY = (int) (Math.random() *((gameboardSize-squareSize-squareSize))/squareSize);
+		randomY *= squareSize;
+		System.out.println(randomY);
 
-		int randomX = (int) (Math.random() * (gameboardSize-squareSize-squareSize));
-		randomX += squareSize;
-
-		while (randomX % squareSize != 0)
-		{
-			randomX = (int) (Math.random() * (gameboardSize-squareSize-squareSize));
-			randomX += squareSize;
-		}
-
-		int randomY = (int) (Math.random() * (gameboardSize-squareSize-squareSize));
+		/*
+		int randomY = (int) (Math.random() * ((gameboardSize-squareSize-squareSize));
 		randomY += squareSize;
+		*/
 
-		while (randomY % squareSize != 0)
-		{
-			randomY = (int) (Math.random() * (gameboardSize-squareSize-squareSize));
-			randomY += squareSize;
-		}
 
 
 		apple.setX(randomX);
