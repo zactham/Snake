@@ -357,7 +357,8 @@ public class SnakeGame extends JPanel implements KeyListener
 
 
 		//When S is pressed the music stops
-		if (c == KeyEvent.VK_S) {
+		if (c == KeyEvent.VK_S) 
+		{
 			if (soundPlaying)
 			{
 				Sound.audioClip.stop();
