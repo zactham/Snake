@@ -11,22 +11,23 @@ import javax.swing.*;
 
 public class SnakeGame extends JPanel implements KeyListener
 {
-	boolean appleinBoard = true; 
 
-	public int direction = 0;
+	private int direction = 0, oldDirection;
 
+	private boolean end = false;
+	private int snakeLengthCounter = 1;
 
-	public int snakeLengthCounter = 1;
+	private int gameboardSize = 400;
+	private int squareSize = 20;
 
-	public int snakeX = 200;
-	public int snakeY = 200;
+	// make initial snakeX,snakeY a multiple of squareSize
+	private int snakeX = ((gameboardSize/squareSize)/2 - 1)*squareSize;
+	private int snakeY = snakeX;
 
+	// snake speed must be a even factor of squareSize
+	private int snakeSpeed = squareSize/10;
 
-
-	public int gameboardSize = 400;
-	public int squareSize = 20;
-
-	public final int max = 100;
+	private final int max = 100;
 
 	Square apple = new Square(0, 0, squareSize, Color.red);
 	Square[] snakePieces = new Square [max];
@@ -35,18 +36,9 @@ public class SnakeGame extends JPanel implements KeyListener
 
 	private int score = 0;
 
-
-	int counter = 1;
-	boolean scored = false;
-
-	int round = 0;
-
-
-
-
 	private boolean soundPlaying = true;
 
-	public boolean correct = false;
+
 
 
 	public MyTimer timer;
@@ -67,14 +59,7 @@ public class SnakeGame extends JPanel implements KeyListener
 
 		score = 0;
 
-		counter = 1;
-		scored = false;
-
-		round = 0;
-
 		soundPlaying = true;
-
-		correct = false;
 
 		turnTime = 2500;
 	}
@@ -128,7 +113,7 @@ public class SnakeGame extends JPanel implements KeyListener
 		try
 
 		{
-			playMusicMain();
+			playInGameMusic();
 		}
 
 		catch (Exception err)
@@ -138,7 +123,6 @@ public class SnakeGame extends JPanel implements KeyListener
 
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		round = 0;
 
 		centerWindow();
 		frame.setSize(gameboardSize, gameboardSize);
@@ -167,20 +151,30 @@ public class SnakeGame extends JPanel implements KeyListener
 	public void MainLoop() // throws InterruptedException
 	{
 		updateGame();
+		collide();
 		repaint();
 	}
 
 
 	public void updateGame()
 	{
-		if(direction == 1)
-			snakePieces[0].setY(snakePieces[0].getY()-1);
-		if(direction == 2)
-			snakePieces[0].setY(snakePieces[0].getY()+1);
-		if(direction == 3)
-			snakePieces[0].setX(snakePieces[0].getX()-1);
-		if(direction == 4)
-			snakePieces[0].setX(snakePieces[0].getX()+1);
+		// only change direction when snakehead is on a multiple of squareSize
+		if (direction != oldDirection && snakePieces[0].getX() % squareSize == 0 &&
+				snakePieces[0].getY() % squareSize == 0)
+		{
+			oldDirection = direction;			
+		}
+
+		if(oldDirection == 1)
+			snakePieces[0].setY(snakePieces[0].getY()-snakeSpeed);
+		if(oldDirection == 2)
+			snakePieces[0].setY(snakePieces[0].getY()+snakeSpeed);
+		if(oldDirection == 3)
+			snakePieces[0].setX(snakePieces[0].getX()-snakeSpeed);
+		if(oldDirection == 4)
+			snakePieces[0].setX(snakePieces[0].getX()+snakeSpeed);
+
+
 	}
 
 	public class AL implements ActionListener
@@ -208,16 +202,18 @@ public class SnakeGame extends JPanel implements KeyListener
 
 	}
 
-	public void playMusicMain() throws InterruptedException
-
-	{
-		playInGameMusic();
-	}
-
 	public void playSoundEffect() throws InterruptedException
 
 	{
 		Sound.play("SMACK Sound Effect.wav");
+	}
+
+	public void collide()
+	{
+		if(apple.getX() == snakePieces[0].getX() && apple.getY() == snakePieces[0].getY())
+		{
+			System.out.println("Collide");
+		}
 	}
 
 
@@ -227,8 +223,21 @@ public class SnakeGame extends JPanel implements KeyListener
 		int randomX = (int) (Math.random() * (gameboardSize-squareSize-squareSize));
 		randomX += squareSize;
 
+		while (randomX % squareSize != 0)
+		{
+			randomX = (int) (Math.random() * (gameboardSize-squareSize-squareSize));
+			randomX += squareSize;
+		}
+
 		int randomY = (int) (Math.random() * (gameboardSize-squareSize-squareSize));
 		randomY += squareSize;
+
+		while (randomY % squareSize != 0)
+		{
+			randomY = (int) (Math.random() * (gameboardSize-squareSize-squareSize));
+			randomY += squareSize;
+		}
+
 
 		apple.setX(randomX);
 		apple.setY(randomY);
@@ -272,7 +281,7 @@ public class SnakeGame extends JPanel implements KeyListener
 	public void gameEnding()
 	{
 		//When the game ends
-		if (round==max-1)
+		if (end)
 		{
 			if (soundPlaying)
 			{
@@ -325,7 +334,7 @@ public class SnakeGame extends JPanel implements KeyListener
 
 
 
-		//Pressing the keys 1 2 3 on the num pad on the right side of the keyboard
+
 		if (c == KeyEvent.VK_UP)//-2
 		{
 			direction = 1;
@@ -375,4 +384,3 @@ public class SnakeGame extends JPanel implements KeyListener
 	}
 
 }
-
