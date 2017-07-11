@@ -110,6 +110,20 @@ public class TitleScreen extends JApplet implements KeyListener
 
 					theApp.launchSnakeGame();
 				}
+				
+				if (c == KeyEvent.VK_S) 
+				{
+					if (soundPlaying)
+					{
+						Sound.audioClip.stop();
+						soundPlaying = false;
+					}
+					else
+					{
+						Sound.audioClip.start();
+						soundPlaying = true;
+					}
+				}
 			}
 		});
 

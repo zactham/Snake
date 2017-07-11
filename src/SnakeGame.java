@@ -14,7 +14,9 @@ public class SnakeGame extends JPanel implements KeyListener
 
 	private int direction = 0, oldDirection;
 
-	private boolean end = false;
+	int nextPiece = 0;
+
+	
 	private int snakeLengthCounter = 1;
 
 	private int gameboardSize = 400;
@@ -37,7 +39,7 @@ public class SnakeGame extends JPanel implements KeyListener
 	private int score = 0;
 
 	private boolean soundPlaying = true;
-	
+
 
 	private JFrame gameOver;
 	private JFrame start;
@@ -55,7 +57,7 @@ public class SnakeGame extends JPanel implements KeyListener
 
 		soundPlaying = true;
 
-		
+
 	}
 
 
@@ -90,25 +92,25 @@ public class SnakeGame extends JPanel implements KeyListener
 		//Sets the speed of the game for each mode
 		if (TitleScreen.easy == true)
 		{
-			
+
 		}
 
-			
+
 
 		if (TitleScreen.med == true)
 		{
-			
+
 		}
 
-			
+
 
 		if (TitleScreen.hard == true)
 		{
-			
+
 		}
 
-	
-	
+
+
 
 		try
 
@@ -158,6 +160,20 @@ public class SnakeGame extends JPanel implements KeyListener
 
 	public void updateGame()
 	{
+		if (snakePieces[0].getX()<0 || snakePieces[0].getX()>400 || snakePieces[0].getY()<0 || snakePieces[0].getY()>400 )
+			gameEnding();
+
+
+		//System.out.println(snakeLengthCounter);
+		//Controls the other pieces
+		for (int i = snakeLengthCounter; i>1; i--)
+		{
+			//System.out.println(i);
+			snakePieces[i-1].moveTo(snakePieces[i-2]);
+
+		}
+
+
 		// only change direction when snakehead is on a multiple of squareSize
 		if (direction != oldDirection && snakePieces[0].getX() % squareSize == 0 &&
 				snakePieces[0].getY() % squareSize == 0)
@@ -173,6 +189,8 @@ public class SnakeGame extends JPanel implements KeyListener
 			snakePieces[0].setX(snakePieces[0].getX()-snakeSpeed);
 		if(oldDirection == 4)
 			snakePieces[0].setX(snakePieces[0].getX()+snakeSpeed);
+
+
 
 
 	}
@@ -213,32 +231,64 @@ public class SnakeGame extends JPanel implements KeyListener
 		if(apple.getX() == snakePieces[0].getX() && apple.getY() == snakePieces[0].getY())
 		{
 			System.out.println("Collide");
+			addSnakePiece();
+
+
 		}
 	}
 
 
 	public void setAppleLocation()
 	{
-//400-20-20 = 360
-		int randomX = (int) (Math.random() *((gameboardSize-squareSize-squareSize)/squareSize));
+		//400-20-20 = 360
+		int randomX = (int) (Math.random() *((gameboardSize-squareSize)/squareSize));
 		randomX *= squareSize;
-		System.out.println(randomX);
-		
-		int randomY = (int) (Math.random() *((gameboardSize-squareSize-squareSize))/squareSize);
+		//System.out.println(randomX);
+
+		int randomY = (int) (Math.random() *((gameboardSize-squareSize))/squareSize);
 		randomY *= squareSize;
-		System.out.println(randomY);
-
-		/*
-		int randomY = (int) (Math.random() * ((gameboardSize-squareSize-squareSize));
-		randomY += squareSize;
-		*/
-
-
+		//System.out.println(randomY);
 
 		apple.setX(randomX);
 		apple.setY(randomY);
 	}
 
+
+	public void addSnakePiece()
+	{
+		snakeLengthCounter+=1;
+		nextPiece+=1;
+
+		Square collidePiece = null;
+
+		if (direction == 1)//up
+		{
+			collidePiece = new Square(snakePieces[nextPiece-1].getX(), snakePieces[nextPiece-1].getY()+20, 
+					20, Color.green);
+		}
+
+		if (direction == 2)//down
+		{
+			collidePiece = new Square(snakePieces[nextPiece-1].getX(), snakePieces[nextPiece-1].getY()-20, 
+					20, Color.green);
+		}
+
+		if (direction == 3)//left
+		{
+			collidePiece = new Square(snakePieces[nextPiece-1].getX()+20, snakePieces[nextPiece-1].getY(), 
+					20, Color.green);
+		}
+
+		if (direction == 4)//right
+		{
+			collidePiece = new Square(snakePieces[nextPiece-1].getX()-20, snakePieces[nextPiece-1].getY(), 
+					20, Color.green);
+		}
+
+
+
+		snakePieces[nextPiece] = collidePiece;
+	}
 
 	public void drawGame(Graphics page)
 	{
@@ -277,23 +327,22 @@ public class SnakeGame extends JPanel implements KeyListener
 	public void gameEnding()
 	{
 		//When the game ends
-		if (end)
-		{
-			if (soundPlaying)
-			{
-				Sound.audioClip.stop();
-				soundPlaying = false;
-			}
-			else
-			{
-				Sound.audioClip.start();
-				soundPlaying = true;
-			}
 
-			//Game Over Message
-			JOptionPane.showMessageDialog(gameOver,
-					"Click the X and then hit F11 to RESTART or Click the X in the top right to QUIT\n Your Percentage:\t " + score + "%");
+		if (soundPlaying)
+		{
+			Sound.audioClip.stop();
+			soundPlaying = false;
 		}
+		else
+		{
+			Sound.audioClip.start();
+			soundPlaying = true;
+		}
+
+		//Game Over Message
+		JOptionPane.showMessageDialog(gameOver,
+				"Game Over\n Your Score:\t " + score + "%");
+
 	}
 
 
@@ -328,7 +377,7 @@ public class SnakeGame extends JPanel implements KeyListener
 		// TODO Auto-generated method stub
 		int c = arg0.getKeyCode();
 
-
+		updateGame();
 
 
 		if (c == KeyEvent.VK_UP)//-2
