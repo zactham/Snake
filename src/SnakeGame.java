@@ -182,13 +182,13 @@ public class SnakeGame extends JPanel implements KeyListener
 		}
 
 		if(oldDirection == 1)
-			snakePieces[0].setY(snakePieces[0].getY()-snakeSpeed);
+			snakePieces[0].update(snakeSpeed);
 		if(oldDirection == 2)
-			snakePieces[0].setY(snakePieces[0].getY()+snakeSpeed);
+			snakePieces[0].update(snakeSpeed);
 		if(oldDirection == 3)
-			snakePieces[0].setX(snakePieces[0].getX()-snakeSpeed);
+			snakePieces[0].update(snakeSpeed);
 		if(oldDirection == 4)
-			snakePieces[0].setX(snakePieces[0].getX()+snakeSpeed);
+			snakePieces[0].update(snakeSpeed);
 
 
 

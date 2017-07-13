@@ -7,6 +7,7 @@ public class Square
 	private int y;
 	private int size;//size of the sides of the squares
 	private Color c;//color of the square
+	private int direction;
 
 	public Square(int xCoord, int yCoord, int squareSize, Color col)
 	{
@@ -53,5 +54,17 @@ public class Square
 	{
 		this.setX(otherSq.getX());
 		this.setY(otherSq.getX());
+	}
+	
+	public void update(int speed)
+	{
+		if(direction == 1)
+			this.setY(this.getY()-speed);
+		if(direction == 2)
+			this.setY(this.getY()+speed);
+		if(direction == 3)
+			this.setX(this.getX()-speed);
+		if(direction == 4)
+			this.setX(this.getX()+speed);
 	}
 }
