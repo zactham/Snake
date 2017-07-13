@@ -16,7 +16,7 @@ public class SnakeGame extends JPanel implements KeyListener
 
 	int nextPiece = 0;
 
-	
+
 	private int snakeLengthCounter = 1;
 
 	private int gameboardSize = 400;
@@ -160,17 +160,16 @@ public class SnakeGame extends JPanel implements KeyListener
 
 	public void updateGame()
 	{
+		//If the snake head goes outside the grid the game ends
 		if (snakePieces[0].getX()<0 || snakePieces[0].getX()>400 || snakePieces[0].getY()<0 || snakePieces[0].getY()>400 )
 			gameEnding();
 
 
-		//System.out.println(snakeLengthCounter);
+
 		//Controls the other pieces
 		for (int i = snakeLengthCounter; i>1; i--)
 		{
-			//System.out.println(i);
-			snakePieces[i-1].moveTo(snakePieces[i-2]);
-
+			snakePieces[i-1].update(snakeSpeed);
 		}
 
 
@@ -181,14 +180,28 @@ public class SnakeGame extends JPanel implements KeyListener
 			oldDirection = direction;			
 		}
 
-		if(oldDirection == 1)
-			snakePieces[0].update(snakeSpeed);
-		if(oldDirection == 2)
-			snakePieces[0].update(snakeSpeed);
-		if(oldDirection == 3)
-			snakePieces[0].update(snakeSpeed);
-		if(oldDirection == 4)
-			snakePieces[0].update(snakeSpeed);
+
+		snakePieces[0].update(snakeSpeed);
+
+		if (oldDirection == 1)
+		{
+			snakePieces[0].setY(snakePieces[0].getY()-snakeSpeed);
+		}
+
+		if (oldDirection == 2)
+		{
+			snakePieces[0].setY(snakePieces[0].getY()+snakeSpeed);
+		}
+
+		if (oldDirection == 3)
+		{
+			snakePieces[0].setX(snakePieces[0].getX()-snakeSpeed);
+		}
+
+		if (oldDirection == 4)
+		{
+			snakePieces[0].setX(snakePieces[0].getX()+snakeSpeed);
+		}
 
 
 
@@ -259,6 +272,8 @@ public class SnakeGame extends JPanel implements KeyListener
 		snakeLengthCounter+=1;
 		nextPiece+=1;
 
+
+
 		Square collidePiece = null;
 
 		if (direction == 1)//up
@@ -286,7 +301,7 @@ public class SnakeGame extends JPanel implements KeyListener
 		}
 
 
-
+		direction = oldDirection;
 		snakePieces[nextPiece] = collidePiece;
 	}
 
