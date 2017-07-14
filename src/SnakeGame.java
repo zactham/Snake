@@ -167,13 +167,6 @@ public class SnakeGame extends JPanel implements KeyListener
 
 
 
-		//Controls the other pieces
-		for (int i = snakeLengthCounter; i>0; i--)
-		{
-			snakePieces[i-1].update(snakeSpeed);
-		}
-
-
 		// only change direction when snakehead is on a multiple of squareSize
 		if (direction != oldDirection && snakePieces[0].getX() % squareSize == 0 &&
 				snakePieces[0].getY() % squareSize == 0)
@@ -181,28 +174,13 @@ public class SnakeGame extends JPanel implements KeyListener
 			oldDirection = direction;			
 		}
 
-		direction = oldDirection;
+		snakePieces[0].setDirection(oldDirection);
 
-		if (oldDirection == 1)
+		//Controls the other pieces, starts at the tail
+		for (int i = snakeLengthCounter; i>0; i--)
 		{
-			snakePieces[0].setY(snakePieces[0].getY()-snakeSpeed);
+			snakePieces[i-1].update(snakeSpeed);
 		}
-
-		if (oldDirection == 2)
-		{
-			snakePieces[0].setY(snakePieces[0].getY()+snakeSpeed);
-		}
-
-		if (oldDirection == 3)
-		{
-			snakePieces[0].setX(snakePieces[0].getX()-snakeSpeed);
-		}
-
-		if (oldDirection == 4)
-		{
-			snakePieces[0].setX(snakePieces[0].getX()+snakeSpeed);
-		}
-
 
 
 
@@ -269,38 +247,39 @@ public class SnakeGame extends JPanel implements KeyListener
 
 	public void addSnakePiece()
 	{
-		snakeLengthCounter+=1;
+
 		nextPiece+=1;
 
-
-
+		int tailDirection = snakePieces[snakeLengthCounter-1].getDirection();
 		Square collidePiece = null;
 
-		if (oldDirection == 1)//up
+		if (tailDirection == 1)//up
 		{
 			collidePiece = new Square(snakePieces[nextPiece-1].getX(), snakePieces[nextPiece-1].getY()-squareSize, 
 					squareSize, Color.green);
+
 		}
 
-		if (oldDirection == 2)//down
+		if (tailDirection == 2)//down
 		{
 			collidePiece = new Square(snakePieces[nextPiece-1].getX(), snakePieces[nextPiece-1].getY()+squareSize, 
 					squareSize, Color.green);
 		}
 
-		if (oldDirection == 3)//left
+		if (tailDirection == 3)//left
 		{
 			collidePiece = new Square(snakePieces[nextPiece-1].getX()-squareSize, snakePieces[nextPiece-1].getY(), 
 					squareSize, Color.green);
 		}
 
-		if (oldDirection == 4)//right
+		if (tailDirection == 4)//right
 		{
 			collidePiece = new Square(snakePieces[nextPiece-1].getX()+squareSize, snakePieces[nextPiece-1].getY(), 
 					squareSize, Color.green);
 		}
 
-
+		collidePiece.setDirection(tailDirection);
+		snakeLengthCounter+=1;
 		direction = oldDirection;
 		snakePieces[nextPiece] = collidePiece;
 	}

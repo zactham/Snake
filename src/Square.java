@@ -17,6 +17,15 @@ public class Square
 		c = col;
 	}
 
+	public void setDirection(int d)
+	{
+		direction = d;
+	}
+
+	public int getDirection()
+	{
+		return direction;
+	}
 
 	public int getX()
 	{
@@ -55,7 +64,7 @@ public class Square
 		this.setX(otherSq.getX());
 		this.setY(otherSq.getX());
 	}
-	
+
 	public void update(int speed)
 	{
 		if(direction == 1)
