@@ -12,6 +12,7 @@ import javax.swing.*;
 public class SnakeGame extends JPanel implements KeyListener
 {
 
+	//the snake head's direction
 	private int direction = 0, oldDirection;
 
 	int nextPiece = 0;
@@ -161,13 +162,13 @@ public class SnakeGame extends JPanel implements KeyListener
 	public void updateGame()
 	{
 		//If the snake head goes outside the grid the game ends
-		if (snakePieces[0].getX()<0 || snakePieces[0].getX()>400 || snakePieces[0].getY()<0 || snakePieces[0].getY()>400 )
+		if (snakePieces[0].getX()<0 || snakePieces[0].getX()>gameboardSize || snakePieces[0].getY()<0 || snakePieces[0].getY()>gameboardSize )
 			gameEnding();
 
 
 
 		//Controls the other pieces
-		for (int i = snakeLengthCounter; i>1; i--)
+		for (int i = snakeLengthCounter; i>0; i--)
 		{
 			snakePieces[i-1].update(snakeSpeed);
 		}
@@ -180,8 +181,7 @@ public class SnakeGame extends JPanel implements KeyListener
 			oldDirection = direction;			
 		}
 
-
-		snakePieces[0].update(snakeSpeed);
+		direction = oldDirection;
 
 		if (oldDirection == 1)
 		{
@@ -276,28 +276,28 @@ public class SnakeGame extends JPanel implements KeyListener
 
 		Square collidePiece = null;
 
-		if (direction == 1)//up
+		if (oldDirection == 1)//up
 		{
-			collidePiece = new Square(snakePieces[nextPiece-1].getX(), snakePieces[nextPiece-1].getY()+20, 
-					20, Color.green);
+			collidePiece = new Square(snakePieces[nextPiece-1].getX(), snakePieces[nextPiece-1].getY()-squareSize, 
+					squareSize, Color.green);
 		}
 
-		if (direction == 2)//down
+		if (oldDirection == 2)//down
 		{
-			collidePiece = new Square(snakePieces[nextPiece-1].getX(), snakePieces[nextPiece-1].getY()-20, 
-					20, Color.green);
+			collidePiece = new Square(snakePieces[nextPiece-1].getX(), snakePieces[nextPiece-1].getY()+squareSize, 
+					squareSize, Color.green);
 		}
 
-		if (direction == 3)//left
+		if (oldDirection == 3)//left
 		{
-			collidePiece = new Square(snakePieces[nextPiece-1].getX()+20, snakePieces[nextPiece-1].getY(), 
-					20, Color.green);
+			collidePiece = new Square(snakePieces[nextPiece-1].getX()-squareSize, snakePieces[nextPiece-1].getY(), 
+					squareSize, Color.green);
 		}
 
-		if (direction == 4)//right
+		if (oldDirection == 4)//right
 		{
-			collidePiece = new Square(snakePieces[nextPiece-1].getX()-20, snakePieces[nextPiece-1].getY(), 
-					20, Color.green);
+			collidePiece = new Square(snakePieces[nextPiece-1].getX()+squareSize, snakePieces[nextPiece-1].getY(), 
+					squareSize, Color.green);
 		}
 
 
