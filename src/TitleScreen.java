@@ -1,6 +1,4 @@
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -10,12 +8,12 @@ import javax.swing.JApplet;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import java.awt.event.KeyListener;
 
 
-public class TitleScreen extends JApplet implements KeyListener
+public class TitleScreen extends JApplet
 {
-
+	private Sound sound;
+	
 	public static boolean easy = false;
 	public static boolean med = false;
 	public static boolean hard = false;
@@ -35,20 +33,12 @@ public class TitleScreen extends JApplet implements KeyListener
 	private JFrame help;
 	private JFrame credits;
 
-	private boolean soundPlaying = true;
-
 	public void init () 
 	{		
 		theApp = this;
 		
-		try
-		{
-			playMusicMain();
-		}
-		catch(Exception err)
-		{
-
-		}
+		sound = new Sound();
+		playMusic();
 
 
 		//Adds the image and creates a button out of it
@@ -70,8 +60,7 @@ public class TitleScreen extends JApplet implements KeyListener
 				{
 					
 					easy = true;
-					Sound.audioClip.stop();
-					soundPlaying = false;
+					sound.stop();
 
 					TitleScreen.theApp.launchSnakeGame();
 				}
@@ -81,8 +70,7 @@ public class TitleScreen extends JApplet implements KeyListener
 					//System.out.println("Easy");
 
 					easy = true;
-					Sound.audioClip.stop();
-					soundPlaying = false;
+					sound.stop();
 
 					TitleScreen.theApp.launchSnakeGame();
 				}
@@ -93,8 +81,7 @@ public class TitleScreen extends JApplet implements KeyListener
 
 					med = true;
 
-					Sound.audioClip.stop();
-					soundPlaying = false;
+					sound.stop();
 
 					TitleScreen.theApp.launchSnakeGame();
 				}
@@ -105,23 +92,20 @@ public class TitleScreen extends JApplet implements KeyListener
 
 					hard = true;
 
-					Sound.audioClip.stop();
-					soundPlaying = false;
+					sound.stop();
 
 					theApp.launchSnakeGame();
 				}
 				
 				if (c == KeyEvent.VK_S) 
 				{
-					if (soundPlaying)
+					if (sound.isPlaying())
 					{
-						Sound.audioClip.stop();
-						soundPlaying = false;
+						sound.stop();
 					}
 					else
 					{
-						Sound.audioClip.start();
-						soundPlaying = true;
+						sound.resume();
 					}
 				}
 			}
@@ -138,15 +122,13 @@ public class TitleScreen extends JApplet implements KeyListener
 				{
 
 					//System.out.println("Music toggle");
-					if (soundPlaying)
+					if (sound.isPlaying())
 					{
-						Sound.audioClip.stop();
-						soundPlaying = false;
+						sound.stop();
 					}
 					else
 					{
-						Sound.audioClip.start();
-						soundPlaying = true;
+						sound.resume();
 					}
 
 				}
@@ -197,31 +179,14 @@ public class TitleScreen extends JApplet implements KeyListener
 	{
 		hideWindow();
 		board = new SnakeGame();
-		try
-		{
-			board.init();
-		} catch (InterruptedException e1) 
-		{
-			//System.out.println(e1);
-		}
+		board.init();
 	}
 
-	public class CloseListener implements ActionListener{
-		public void actionPerformed(ActionEvent e) {
-			System.exit(0);
-		}
-	}
-
-	public void playMusic() throws InterruptedException
+	public void playMusic()
 	{
-		Sound.play("TitleScreenMusic.wav");
+		sound.play("TitleScreenMusic.wav");
 	}
 
-	public void playMusicMain() throws InterruptedException
-	{
-		playMusic();
-
-	}
 
 	public void hideWindow()
 	{
@@ -250,22 +215,5 @@ public class TitleScreen extends JApplet implements KeyListener
 		}
 	}
 
-	@Override
-	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-
-	}
 }
 

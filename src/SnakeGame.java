@@ -11,7 +11,8 @@ import javax.swing.*;
 
 public class SnakeGame extends JPanel implements KeyListener
 {
-
+	private Sound sound;
+	
 	//the snake head's direction
 	private int direction = 0, oldDirection;
 
@@ -39,8 +40,6 @@ public class SnakeGame extends JPanel implements KeyListener
 
 	private int score = 0;
 
-	private boolean soundPlaying = true;
-
 
 	private JFrame gameOver;
 	private JFrame start;
@@ -56,17 +55,16 @@ public class SnakeGame extends JPanel implements KeyListener
 
 		score = 0;
 
-		soundPlaying = true;
-
-
 	}
 
 
 
 
-	public void init() throws InterruptedException
+	public void init()
 	{
 
+		sound = new Sound();
+		
 		// launch game
 		JFrame frame = new JFrame("Sample Frame");
 
@@ -151,7 +149,7 @@ public class SnakeGame extends JPanel implements KeyListener
 	}
 
 
-	public void MainLoop() // throws InterruptedException
+	public void MainLoop()
 	{
 		updateGame();
 		collide();
@@ -186,35 +184,17 @@ public class SnakeGame extends JPanel implements KeyListener
 
 	}
 
-	public class AL implements ActionListener
-	{
-		public final void actionPerformed(ActionEvent e)
-		{
-
-			if (soundPlaying)
-			{
-				Sound.audioClip.stop();
-				soundPlaying = false;
-			}
-			else
-			{
-				Sound.audioClip.start();
-				soundPlaying = true;
-			}
-		}
-	}
-
-	public void playInGameMusic() throws InterruptedException
+	public void playInGameMusic()
 
 	{
-		Sound.play("IngameMusic.wav");
+		sound.play("IngameMusic.wav");
 
 	}
 
-	public void playSoundEffect() throws InterruptedException
+	public void playSoundEffect()
 
 	{
-		Sound.play("SMACK Sound Effect.wav");
+		sound.play("SMACK Sound Effect.wav");
 	}
 
 	public void collide()
@@ -315,23 +295,11 @@ public class SnakeGame extends JPanel implements KeyListener
 	}
 
 
-
-
-
 	public void gameEnding()
 	{
 		//When the game ends
 
-		if (soundPlaying)
-		{
-			Sound.audioClip.stop();
-			soundPlaying = false;
-		}
-		else
-		{
-			Sound.audioClip.start();
-			soundPlaying = true;
-		}
+		sound.stop();
 
 		//Game Over Message
 		JOptionPane.showMessageDialog(gameOver,
@@ -398,15 +366,13 @@ public class SnakeGame extends JPanel implements KeyListener
 		//When S is pressed the music stops
 		if (c == KeyEvent.VK_S) 
 		{
-			if (soundPlaying)
+			if (sound.isPlaying())
 			{
-				Sound.audioClip.stop();
-				soundPlaying = false;
+				sound.stop();
 			}
 			else
 			{
-				Sound.audioClip.start();
-				soundPlaying = true;
+				sound.resume();
 			}
 		}
 	}

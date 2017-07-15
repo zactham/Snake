@@ -5,13 +5,19 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.DataLine;
 
+//
+// represents a simple audio clip
+//
 public class Sound
 {
+	private Clip audioClip;
 
-	public static Clip audioClip;
-
-
-	public static void play(String audioFilePath)
+	public Clip getClip() 		{ return audioClip; }
+	public boolean isPlaying() 	{ return audioClip.isRunning(); }
+	public void stop() 			{ audioClip.stop(); }
+	public void resume() 		{ audioClip.start(); }
+	
+	public void play(String audioFilePath)
 	{
 		try
 		{
@@ -27,33 +33,6 @@ public class Sound
 		catch (Exception err)
 		{
 			System.out.println("1. " + err);
-		}
-	}
-
-
-	// app entry point
-	public static void main(String[] args) throws InterruptedException
-	{
-		for (int i = 1; i >0; i++ )
-		{
-			
-			
-			//play("TitleScreenMusic.wav");
-
-			
-			
-			
-			
-			
-			
-			// sleep for secs while sound plays
-			Thread.sleep(1000 * 29);
-
-			//Ingame: 4min 5 sec so 245 sec
-			//TitleScreen: 29 sec
-
-			// close sound
-			audioClip.close();
 		}
 	}
 
