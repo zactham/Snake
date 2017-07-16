@@ -16,7 +16,7 @@ public class SnakeGame extends JPanel implements KeyListener
 	//the snake head's direction
 	private int direction = 0, oldDirection;
 
-	int nextPiece = 0;
+	
 
 
 	private int snakeLengthCounter = 1;
@@ -209,12 +209,23 @@ public class SnakeGame extends JPanel implements KeyListener
 
 	public void collide()
 	{
-		if(apple.getX() == snakePieces[0].getX() && apple.getY() == snakePieces[0].getY())
+		if(apple.collide(snakePieces[0]))
 		{
 			System.out.println("Collide");
+			score+=3;
 			addSnakePiece();
+			addSnakePiece();
+			addSnakePiece();
+			setAppleLocation();
 
+		}
 
+		for (int i=1; i<snakeLengthCounter; i++)
+		{
+			if(snakePieces[0].collide(snakePieces[i]))
+			{
+				gameEnding();
+			}
 		}
 	}
 
@@ -222,13 +233,15 @@ public class SnakeGame extends JPanel implements KeyListener
 	public void setAppleLocation()
 	{
 		//400-20-20 = 360
-		int randomX = (int) (Math.random() *((gameboardSize-squareSize)/squareSize));
+		int randomX = (int) (Math.random() *((gameboardSize-squareSize-squareSize)/squareSize));
 		randomX *= squareSize;
-		//System.out.println(randomX);
 
-		int randomY = (int) (Math.random() *((gameboardSize-squareSize))/squareSize);
+		System.out.println(randomX);
+
+		int randomY = (int) (Math.random() *((gameboardSize-squareSize-squareSize))/squareSize);
 		randomY *= squareSize;
-		//System.out.println(randomY);
+		
+		System.out.println(randomY);
 
 		apple.setX(randomX);
 		apple.setY(randomY);
@@ -238,40 +251,40 @@ public class SnakeGame extends JPanel implements KeyListener
 	public void addSnakePiece()
 	{
 
-		nextPiece+=1;
+	
 
 		int tailDirection = snakePieces[snakeLengthCounter-1].getDirection();
 		Square collidePiece = null;
 
 		if (tailDirection == 1)//up
 		{
-			collidePiece = new Square(snakePieces[nextPiece-1].getX(), snakePieces[nextPiece-1].getY()+squareSize, 
+			collidePiece = new Square(snakePieces[snakeLengthCounter-1].getX(), snakePieces[snakeLengthCounter-1].getY()+squareSize, 
 					squareSize, Color.green);
 		}
 
 		if (tailDirection == 2)//down
 		{
 
-			collidePiece = new Square(snakePieces[nextPiece-1].getX(), snakePieces[nextPiece-1].getY()-squareSize, 
+			collidePiece = new Square(snakePieces[snakeLengthCounter-1].getX(), snakePieces[snakeLengthCounter-1].getY()-squareSize, 
 					squareSize, Color.green);
 		}
 
 		if (tailDirection == 3)//left
 		{
-			collidePiece = new Square(snakePieces[nextPiece-1].getX()+squareSize, snakePieces[nextPiece-1].getY(), 
+			collidePiece = new Square(snakePieces[snakeLengthCounter-1].getX()+squareSize, snakePieces[snakeLengthCounter-1].getY(), 
 					squareSize, Color.green);
 		}
 
 		if (tailDirection == 4)//right
 		{
-			collidePiece = new Square(snakePieces[nextPiece-1].getX()-squareSize, snakePieces[nextPiece-1].getY(), 
+			collidePiece = new Square(snakePieces[snakeLengthCounter-1].getX()-squareSize, snakePieces[snakeLengthCounter-1].getY(), 
 					squareSize, Color.green);
 		}
 
 		collidePiece.setDirection(tailDirection);
 		snakeLengthCounter+=1;
 		direction = oldDirection;
-		snakePieces[nextPiece] = collidePiece;
+		snakePieces[snakeLengthCounter-1] = collidePiece;
 	}
 
 	public void drawGame(Graphics page)
@@ -313,7 +326,7 @@ public class SnakeGame extends JPanel implements KeyListener
 
 		//Game Over Message
 		JOptionPane.showMessageDialog(gameOver,
-				"Game Over\n Your Score:\t " + score + "%");
+				"Game Over\n Your Score:\t " + score);
 		System.exit(0);
 
 	}
@@ -377,14 +390,7 @@ public class SnakeGame extends JPanel implements KeyListener
 		//When S is pressed the music stops
 		if (c == KeyEvent.VK_S) 
 		{
-			if (sound.isPlaying())
-			{
-				sound.stop();
-			}
-			else
-			{
-				sound.resume();
-			}
+			Sound.toggle(sound);
 		}
 	}
 

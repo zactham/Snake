@@ -56,7 +56,9 @@ public class Square
 	//returns true if the square collides (intersects) with another Square object that is passed in
 	public boolean collide(Square otherSq)
 	{
-		return true;
+		if(this.getX() == otherSq.getX() && this.getY() == otherSq.getY())
+			return true;
+		return false;
 	}
 
 	public void moveTo(Square otherSq)

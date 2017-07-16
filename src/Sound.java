@@ -5,18 +5,28 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.DataLine;
 
-//
-// represents a simple audio clip
-//
+
 public class Sound
 {
 	private Clip audioClip;
 
-	public Clip getClip() 		{ return audioClip; }
-	public boolean isPlaying() 	{ return audioClip.isRunning(); }
-	public void stop() 			{ audioClip.stop(); }
-	public void resume() 		{ audioClip.start(); }
-	
+	public Clip getClip() 		
+	{
+		return audioClip; 
+	}
+	public boolean isPlaying() 
+	{ 
+		return audioClip.isRunning(); 
+	}
+	public void stop() 			
+	{ 
+		audioClip.stop(); 
+	}
+	public void resume() 		
+	{
+		audioClip.start(); 
+	}
+
 	public void play(String audioFilePath)
 	{
 		try
@@ -33,6 +43,18 @@ public class Sound
 		catch (Exception err)
 		{
 			System.out.println("1. " + err);
+		}
+	}
+	
+	public static void toggle(Sound s)
+	{
+		if (s.isPlaying())
+		{
+			s.stop();
+		}
+		else
+		{
+			s.resume();
 		}
 	}
 
