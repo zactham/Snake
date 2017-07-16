@@ -76,4 +76,14 @@ public class Square
 		if(direction == 4)
 			this.setX(this.getX()+speed);
 	}
+
+	public boolean onGrid (int gridSize)
+	{
+		if (this.getX() % gridSize == 0 && this.getY() % gridSize == 0)
+		{
+			return true;
+		}
+		else
+			return false;
+	}
 }
