@@ -141,16 +141,6 @@ public class SnakeGame extends JPanel implements KeyListener
 		if (snakePieces[0].getX()<0 || snakePieces[0].getX()>gameboardSize || snakePieces[0].getY()<0 || snakePieces[0].getY()>gameboardSize )
 			gameEnding();
 
-
-
-		// only change direction when snakehead is on a multiple of squareSize
-		if (direction != oldDirection && snakePieces[0].onGrid(squareSize))
-		{
-			oldDirection = direction;			
-		}
-
-		snakePieces[0].setDirection(oldDirection);
-
 		//Controls the other pieces, starts at the tail
 		for (int i = snakeLengthCounter; i>0; i--)
 		{
@@ -167,6 +157,13 @@ public class SnakeGame extends JPanel implements KeyListener
 
 		}
 
+		// only change direction when snakehead is on a multiple of squareSize
+		if (direction != oldDirection && snakePieces[0].onGrid(squareSize))
+		{
+			oldDirection = direction;			
+		}
+
+		snakePieces[0].setDirection(oldDirection);
 
 	}
 
