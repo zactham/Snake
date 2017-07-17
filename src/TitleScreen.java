@@ -22,7 +22,7 @@ public class TitleScreen extends JApplet
 	private SnakeGame board;
 
 	private ImageIcon titleScreenImage;//image
-
+	private JFrame start;
 
 	//All buttons
 
@@ -48,8 +48,9 @@ public class TitleScreen extends JApplet
 		setSize(320,240);
 		centerWindow();//centers the window
 
-
+		
 		titleScButton.addKeyListener(new KeyAdapter()
+		
 		{
 			public void keyPressed(KeyEvent arg0) 
 			{
@@ -103,7 +104,7 @@ public class TitleScreen extends JApplet
 				}
 			}
 		});
-
+		JOptionPane.showMessageDialog(start, "Press 'E' for Easy, 'M' for Medium, 'H' for Hard");
 
 		//Based on where they click in easy medium or hard something happens
 		titleScButton.addMouseListener(new MouseAdapter()
@@ -142,7 +143,7 @@ public class TitleScreen extends JApplet
 
 					//	System.out.println("Credits");
 					JOptionPane.showMessageDialog(help,
-							"Created by Zac Thamer and Saumya Shukla");
+							"Created by Zac Thamer and Mustafa Thamer");
 
 
 				}

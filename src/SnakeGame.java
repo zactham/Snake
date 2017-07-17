@@ -3,6 +3,7 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -17,10 +18,10 @@ public class SnakeGame extends JPanel implements KeyListener
 	//the snake head's direction
 	private int direction = 0, oldDirection;
 
-	
+
 	private int snakeLengthCounter = 1;
 
-	private int gameboardSize = 400;
+	private int gameboardSize = 800;
 	private int squareSize = 20;
 
 	// make initial snakeX,snakeY a multiple of squareSize
@@ -52,6 +53,7 @@ public class SnakeGame extends JPanel implements KeyListener
 
 		score = 0;
 	}
+	
 
 
 
@@ -61,7 +63,7 @@ public class SnakeGame extends JPanel implements KeyListener
 		sound = new Sound();
 
 		setPreferredSize(new Dimension(gameboardSize, gameboardSize));
-		
+
 		// launch game
 		JFrame frame = new JFrame("Sample Frame");
 		frame.getContentPane().add(this);
@@ -82,21 +84,24 @@ public class SnakeGame extends JPanel implements KeyListener
 		//Sets the speed of the game for each mode
 		if (TitleScreen.easy == true)
 		{
-
+			snakeSpeed = squareSize/10;
+			//speed = 2
 		}
 
 
 
 		if (TitleScreen.med == true)
 		{
-
+			snakeSpeed = squareSize/5;
+			//speed = 4
 		}
 
 
 
 		if (TitleScreen.hard == true)
 		{
-
+			snakeSpeed = squareSize/4;
+			//speed = 5
 		}
 
 
@@ -210,7 +215,7 @@ public class SnakeGame extends JPanel implements KeyListener
 
 		int randomY = (int) (Math.random() *((gameboardSize-squareSize))/squareSize);
 		randomY *= squareSize;
-		
+
 		System.out.println(randomY);
 
 		apple.setX(randomX);
@@ -222,6 +227,8 @@ public class SnakeGame extends JPanel implements KeyListener
 	{
 
 		int tailDirection = snakePieces[snakeLengthCounter-1].getDirection();
+		
+		
 		Square collidePiece = null;
 
 		if (tailDirection == 1)//up
@@ -302,8 +309,8 @@ public class SnakeGame extends JPanel implements KeyListener
 		//Displays the Score
 		page.setColor(Color.black);
 		page.setFont(new Font("Comic Sans MS", Font.PLAIN, 50));
-		page.drawString("SCORE: ", 75, 350);
-		page.drawString(Integer.toString(score), 275, 350);
+		page.drawString("SCORE: ", (gameboardSize/2)-110, gameboardSize-50);
+		page.drawString(Integer.toString(score), (gameboardSize/2)+120, gameboardSize-50);
 	}
 
 	@Override

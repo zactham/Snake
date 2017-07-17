@@ -51,6 +51,14 @@ public class Square
 	{
 		page.setColor(c);
 		page.fillRect(x, y, size, size);
+		if (c == Color.GREEN)
+		{
+			page.setColor(Color.black);
+			page.drawLine(x, y, x+size, y);//top of square
+			page.drawLine(x, y+size, x+size, y+size);//bottom of square
+			page.drawLine(x, y, x, y+size);//left side
+			page.drawLine(x+size, y, x+size, y+size);//right side
+		}
 	}
 
 	//returns true if the square collides (intersects) with another Square object that is passed in
