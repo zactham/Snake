@@ -253,7 +253,6 @@ public class SnakeGame extends JPanel implements KeyListener
 
 		collidePiece.setDirection(tailDirection);
 		snakeLengthCounter+=1;
-		direction = oldDirection;
 		snakePieces[snakeLengthCounter-1] = collidePiece;
 	}
 
@@ -331,9 +330,6 @@ public class SnakeGame extends JPanel implements KeyListener
 	{
 		// TODO Auto-generated method stub
 		int c = arg0.getKeyCode();
-
-		updateGame();
-
 
 		if (c == KeyEvent.VK_UP)//-2
 		{
