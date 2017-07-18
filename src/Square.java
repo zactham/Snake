@@ -7,7 +7,7 @@ public class Square
 	private int y;
 	private int size;//size of the sides of the squares
 	private Color c;//color of the square
-	private int direction;
+	private EnumDirections direction;
 
 	public Square(int xCoord, int yCoord, int squareSize, Color col)
 	{
@@ -17,12 +17,12 @@ public class Square
 		c = col;
 	}
 
-	public void setDirection(int d)
+	public void setDirection(EnumDirections d)
 	{
 		direction = d;
 	}
 
-	public int getDirection()
+	public EnumDirections getDirection()
 	{
 		return direction;
 	}
@@ -77,13 +77,13 @@ public class Square
 
 	public void update(int speed)
 	{
-		if(direction == 1)
+		if(direction == EnumDirections.UP)
 			this.setY(this.getY()-speed);
-		if(direction == 2)
+		if(direction == EnumDirections.DOWN)
 			this.setY(this.getY()+speed);
-		if(direction == 3)
+		if(direction == EnumDirections.LEFT)
 			this.setX(this.getX()-speed);
-		if(direction == 4)
+		if(direction == EnumDirections.RIGHT)
 			this.setX(this.getX()+speed);
 	}
 

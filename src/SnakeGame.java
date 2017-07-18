@@ -11,12 +11,14 @@ import java.awt.event.KeyListener;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 
+
+
 public class SnakeGame extends JPanel implements KeyListener
 {
 	private Sound sound;
 
 	//the snake head's direction
-	private int direction = 0, oldDirection;
+	private EnumDirections direction, oldDirection;
 
 
 	private int snakeLengthCounter = 1;
@@ -226,36 +228,36 @@ public class SnakeGame extends JPanel implements KeyListener
 	public void addSnakePiece()
 	{
 
-		int tailDirection = snakePieces[snakeLengthCounter-1].getDirection();
 		
+		Square tail = snakePieces[snakeLengthCounter-1];
 		
 		Square collidePiece = null;
 
-		if (tailDirection == 1)//up
+		if (tail.getDirection()== EnumDirections.UP)//up
 		{
 			collidePiece = new Square(snakePieces[snakeLengthCounter-1].getX(), snakePieces[snakeLengthCounter-1].getY()+squareSize, 
 					squareSize, Color.green);
 		}
 
-		if (tailDirection == 2)//down
+		if (tail.getDirection()== EnumDirections.DOWN)//down
 		{
 			collidePiece = new Square(snakePieces[snakeLengthCounter-1].getX(), snakePieces[snakeLengthCounter-1].getY()-squareSize, 
 					squareSize, Color.green);
 		}
 
-		if (tailDirection == 3)//left
+		if (tail.getDirection()== EnumDirections.LEFT)//left
 		{
 			collidePiece = new Square(snakePieces[snakeLengthCounter-1].getX()+squareSize, snakePieces[snakeLengthCounter-1].getY(), 
 					squareSize, Color.green);
 		}
 
-		if (tailDirection == 4)//right
+		if (tail.getDirection()== EnumDirections.RIGHT)//right
 		{
 			collidePiece = new Square(snakePieces[snakeLengthCounter-1].getX()-squareSize, snakePieces[snakeLengthCounter-1].getY(), 
 					squareSize, Color.green);
 		}
 
-		collidePiece.setDirection(tailDirection);
+		collidePiece.setDirection(tail.getDirection());
 		snakeLengthCounter+=1;
 		snakePieces[snakeLengthCounter-1] = collidePiece;
 	}
@@ -337,21 +339,21 @@ public class SnakeGame extends JPanel implements KeyListener
 
 		if (c == KeyEvent.VK_UP)//-2
 		{
-			direction = 1;
+			direction = EnumDirections.UP;
 		}
 
 		if (c == KeyEvent.VK_DOWN) //+2
 		{	
-			direction = 2;
+			direction = EnumDirections.DOWN;
 		}
 
 		if (c == KeyEvent.VK_LEFT)//-2
 		{	
-			direction = 3;
+			direction = EnumDirections.LEFT;
 		}
 		if (c == KeyEvent.VK_RIGHT)//+2
 		{
-			direction = 4;
+			direction = EnumDirections.RIGHT;
 		}
 
 
