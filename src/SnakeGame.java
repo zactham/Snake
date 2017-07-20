@@ -227,7 +227,6 @@ public class SnakeGame extends JPanel implements KeyListener
 
 	public void addSnakePiece()
 	{
-
 		
 		Square tail = snakePieces[snakeLengthCounter-1];
 		
@@ -297,15 +296,39 @@ public class SnakeGame extends JPanel implements KeyListener
 		//When the game ends
 
 		sound.stop();
-
-		//Game Over Message
-		JOptionPane.showMessageDialog(gameOver,
-				"Game Over\n Your Score:\t " + score);
-		System.exit(0);
-
+		
+		int result = JOptionPane.showConfirmDialog(this, 
+				"Your Score: " + score + " - Play Again?", 
+				"Game Over", JOptionPane.YES_NO_OPTION);
+		
+		if (result == JOptionPane.NO_OPTION)
+		{
+			// no
+			System.exit(0);
+		}
+		else
+		{
+			// yes, play again
+			resetGame();
+		}
 	}
 
-
+	//
+	// reset the game so we can play again
+	//
+	private void resetGame()
+	{
+		// delete entire snake piece array
+		
+		// create original head piece, set snake head to original snake X,Y
+		snakePieces[0].setX(snakeX);
+		snakePieces[0].setY(snakeY);
+		
+		// reset direction, oldDirection, snakeLengthCounter, Score, apple location, ...
+		
+		// start music
+	}
+	
 	public void displayScore(Graphics page)
 	{
 		//Displays the Score
