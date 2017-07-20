@@ -145,7 +145,7 @@ public class SnakeGame extends JPanel implements KeyListener
 	public void updateGame()
 	{
 		//If the snake head goes outside the grid the game ends
-		if (snakePieces[0].getX()<0 || snakePieces[0].getX()>gameboardSize || snakePieces[0].getY()<0 || snakePieces[0].getY()>gameboardSize )
+		if (snakePieces[0].getX()<0 || snakePieces[0].getX()>=gameboardSize || snakePieces[0].getY()<0 || snakePieces[0].getY()>=gameboardSize )
 			gameEnding();
 
 		//Controls the other pieces, starts at the tail
