@@ -3,7 +3,6 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
-
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -16,6 +15,10 @@ import javax.swing.*;
 public class SnakeGame extends JPanel implements KeyListener
 {
 	private Sound sound;
+
+	public Color outline = Color.black;
+	
+	public int resetCounter = 0;
 
 	//the snake head's direction
 	private EnumDirections direction, oldDirection;
@@ -55,7 +58,7 @@ public class SnakeGame extends JPanel implements KeyListener
 
 		score = 0;
 	}
-	
+
 
 
 
@@ -227,9 +230,9 @@ public class SnakeGame extends JPanel implements KeyListener
 
 	public void addSnakePiece()
 	{
-		
+
 		Square tail = snakePieces[snakeLengthCounter-1];
-		
+
 		Square collidePiece = null;
 
 		if (tail.getDirection()== EnumDirections.UP)//up
@@ -263,11 +266,11 @@ public class SnakeGame extends JPanel implements KeyListener
 
 	public void drawGame(Graphics page)
 	{
-		apple.draw(page);
+		apple.draw(page,outline);
 
 		for (int i = 0; i<snakeLengthCounter; i++)
 		{
-			snakePieces[i].draw(page);
+			snakePieces[i].draw(page,outline);
 		}
 	}
 
@@ -296,11 +299,11 @@ public class SnakeGame extends JPanel implements KeyListener
 		//When the game ends
 
 		sound.stop();
-		
+
 		int result = JOptionPane.showConfirmDialog(this, 
 				"Your Score: " + score + " - Play Again?", 
 				"Game Over", JOptionPane.YES_NO_OPTION);
-		
+
 		if (result == JOptionPane.NO_OPTION)
 		{
 			// no
@@ -310,6 +313,7 @@ public class SnakeGame extends JPanel implements KeyListener
 		{
 			// yes, play again
 			resetGame();
+			resetCounter++;
 		}
 	}
 
@@ -319,16 +323,38 @@ public class SnakeGame extends JPanel implements KeyListener
 	private void resetGame()
 	{
 		// delete entire snake piece array
-		
+		if (resetCounter > 1)
+			System.exit(0);
+
+
 		// create original head piece, set snake head to original snake X,Y
 		snakePieces[0].setX(snakeX);
 		snakePieces[0].setY(snakeY);
-		
+
 		// reset direction, oldDirection, snakeLengthCounter, Score, apple location, ...
-		
+		Sound sound;
+
+		//the snake head's direction
+		EnumDirections direction, oldDirection;
+
+		int snakeX = ((gameboardSize/squareSize)/2 - 1)*squareSize;
+		int snakeY = snakeX;
+
+		int snakeLengthCounter = 1;
+
+		Square apple = new Square(0, 0, squareSize, Color.red);
+		Square[] snakePieces = new Square [max];
+
+		int score = 0;
+
+		JFrame gameOver;
+		JFrame start;
+
 		// start music
+		init();
+
 	}
-	
+
 	public void displayScore(Graphics page)
 	{
 		//Displays the Score

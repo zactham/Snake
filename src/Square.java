@@ -7,7 +7,6 @@ public class Square
 	private int y;
 	private int size;//size of the sides of the squares
 	private Color c;//color of the square
-	private Color mainColor = Color.GREEN;//The color that is used most
 	private EnumDirections direction;
 
 	public Square(int xCoord, int yCoord, int squareSize, Color col)
@@ -48,13 +47,13 @@ public class Square
 		y = newY;
 	}
 
-	public void draw(Graphics page)
+	public void draw(Graphics page, Color outline)
 	{
 		page.setColor(c);
 		page.fillRect(x, y, size, size);
-		if (c == mainColor)
+		if (outline != c)
 		{
-			page.setColor(Color.black);
+			page.setColor(outline);
 		page.drawRect(x, y, size, size);
 		}
 	}
