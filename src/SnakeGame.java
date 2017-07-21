@@ -16,9 +16,9 @@ public class SnakeGame extends JPanel implements KeyListener
 {
 	private Sound sound;
 
-	public Color outline = Color.black;
-	
-	public int resetCounter = 0;
+	private Color outline = Color.black;
+
+
 
 	//the snake head's direction
 	private EnumDirections direction, oldDirection;
@@ -85,29 +85,7 @@ public class SnakeGame extends JPanel implements KeyListener
 		snakePieces[0] = number1;
 
 
-
-		//Sets the speed of the game for each mode
-		if (TitleScreen.easy == true)
-		{
-			snakeSpeed = squareSize/10;
-			//speed = 2
-		}
-
-
-
-		if (TitleScreen.med == true)
-		{
-			snakeSpeed = squareSize/5;
-			//speed = 4
-		}
-
-
-
-		if (TitleScreen.hard == true)
-		{
-			snakeSpeed = squareSize/4;
-			//speed = 5
-		}
+		gameMode();
 
 
 		playInGameMusic();
@@ -134,6 +112,33 @@ public class SnakeGame extends JPanel implements KeyListener
 		timer.setRepeats(true);
 		timer.start();
 
+	}
+	
+	public void gameMode()
+	{
+
+		//Sets the speed of the game for each mode
+		if (TitleScreen.easy == true)
+		{
+			snakeSpeed = squareSize/10;
+			//speed = 2
+		}
+
+
+
+		if (TitleScreen.med == true)
+		{
+			snakeSpeed = squareSize/5;
+			//speed = 4
+		}
+
+
+
+		if (TitleScreen.hard == true)
+		{
+			snakeSpeed = squareSize/4;
+			//speed = 5
+		}
 	}
 
 
@@ -313,7 +318,7 @@ public class SnakeGame extends JPanel implements KeyListener
 		{
 			// yes, play again
 			resetGame();
-			resetCounter++;
+
 		}
 	}
 
@@ -322,36 +327,30 @@ public class SnakeGame extends JPanel implements KeyListener
 	//
 	private void resetGame()
 	{
-		// delete entire snake piece array
-		if (resetCounter > 1)
-			System.exit(0);
-
-
-		// create original head piece, set snake head to original snake X,Y
-		snakePieces[0].setX(snakeX);
-		snakePieces[0].setY(snakeY);
 
 		// reset direction, oldDirection, snakeLengthCounter, Score, apple location, ...
-		Sound sound;
 
-		//the snake head's direction
-		EnumDirections direction, oldDirection;
 
-		int snakeX = ((gameboardSize/squareSize)/2 - 1)*squareSize;
-		int snakeY = snakeX;
+		
 
-		int snakeLengthCounter = 1;
+		snakeX = ((gameboardSize/squareSize)/2 - 1)*squareSize;
+		snakeY = snakeX;
 
-		Square apple = new Square(0, 0, squareSize, Color.red);
-		Square[] snakePieces = new Square [max];
+		snakeLengthCounter = 1;
 
-		int score = 0;
 
-		JFrame gameOver;
-		JFrame start;
+		snakePieces = new Square [max];
+		// create original head piece, set snake head to original snake X,Y
 
-		// start music
-		init();
+		score = 0;
+
+		
+		gameMode();
+		playInGameMusic();
+		Square number1 = new Square(snakeX, snakeY, squareSize, Color.GREEN );
+		snakePieces[0] = number1;
+		setAppleLocation();
+		
 
 	}
 
