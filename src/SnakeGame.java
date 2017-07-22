@@ -112,6 +112,8 @@ public class SnakeGame extends JPanel implements KeyListener
 		timer.setRepeats(true);
 		timer.start();
 
+		direction = EnumDirections.NONE;
+		oldDirection = direction;
 	}
 	
 	public void gameMode()
@@ -324,15 +326,10 @@ public class SnakeGame extends JPanel implements KeyListener
 
 	//
 	// reset the game so we can play again
+	// reset direction, oldDirection, snakeLengthCounter, Score, apple location, ...
 	//
 	private void resetGame()
 	{
-
-		// reset direction, oldDirection, snakeLengthCounter, Score, apple location, ...
-
-
-		
-
 		snakeX = ((gameboardSize/squareSize)/2 - 1)*squareSize;
 		snakeY = snakeX;
 
@@ -351,6 +348,8 @@ public class SnakeGame extends JPanel implements KeyListener
 		snakePieces[0] = number1;
 		setAppleLocation();
 		
+		direction = EnumDirections.NONE;
+		oldDirection = direction;
 
 	}
 

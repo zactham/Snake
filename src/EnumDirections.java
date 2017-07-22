@@ -1,4 +1,4 @@
 public enum EnumDirections
 {
-	UP, DOWN, LEFT, RIGHT
+	UP, DOWN, LEFT, RIGHT, NONE
 }
